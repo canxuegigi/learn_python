@@ -2,6 +2,12 @@
 #encoding=utf-8
 #Author:canxue
 
+"""
+先认真分析需求，画出流程图
+处理过程中使用正确的数据类型和操作方式
+始终注意输入与输出
+
+"""
 
 stat_dict = {}
 row_num = 0
