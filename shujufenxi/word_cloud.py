@@ -5,11 +5,13 @@
 import jieba
 #还需安装matplotlib，否则会提示模块不存在
 from wordcloud import WordCloud
+import numpy as np
+from PIL import Image
 
 text="李小璐给王思聪买了微博热搜"
 result=jieba.cut(text)
 #发现结果并不好
-print("切分结果:  "+",".join(result))
+print("原生切分结果:  "+",".join(result))
 
 #人为干预
 text="李小璐给王思聪买了微博热搜"
@@ -20,7 +22,7 @@ text="李小璐给王思聪买了微博热搜"
 #也可以将特殊用词加入用户自定义词典，实现相同的效果，每行一个
 jieba.load_userdict("jieba_user_dict.txt")
 result=jieba.cut(text)
-print("切分结果:  "+",".join(result))
+print("人为干预切分结果:  "+",".join(result))
 
 """
 文本清洗
@@ -29,6 +31,7 @@ print("切分结果:  "+",".join(result))
 """
 
 text = open('调教初唐.txt','r').read()
+#text = open('baijie.txt','r',encoding='utf-8').read()
 #读取标点符号库，文件为utf-8，若不指定则可能打开报错
 f=open("stopwords.txt","r",encoding='utf-8')
 stopwords={}.fromkeys(f.read().split("\n"))
@@ -51,11 +54,15 @@ cloud_text=",".join(mytext_list)
 词云绘制工具wordcloud默认使用的字体是英文的，不包含中文编码，所以才会方框一片。
 解决的办法，拷一个中文字体过来，作为指定输出字体。
 """
+#可以指定图片，这相当于按图片的轮廓进行生成，不含图片的内容，所以通常是一些有意义的形状
+cloud_mask = np.array(Image.open("bg.jpg"))
+
 #background_color="white"
 wc = WordCloud(
-    background_color="black", #背景颜色
+    background_color="white", #背景颜色
+    mask=cloud_mask,
     max_words=250, #显示最大词数
-    font_path="FZSTK.TTF",  #使用字体
+    font_path="FZSTK.TTF",  #使用中文字体，反正显示乱码
     min_font_size=15,
     max_font_size=50,
     width=500  #图幅宽度

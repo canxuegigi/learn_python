@@ -15,6 +15,12 @@ stat_dict = {}
 row_num = 0
 black_chart = ['，','\n','。','“','”','：','…']
 
+"""
+UnicodeDecodeError: 'gbk' codec can't decode byte 0x80 in position 4: illegal multibyte sequence
+windows上默认使用gbk编码打开文件，而文件以前是utf-8的编码，所以报错，两种方式
+修改文件的编码
+指定打开文件的编码：fr = open('文件名','r',encoding='utf-8'
+"""
 fr = open('调教初唐.txt','r')
 for line in fr:
     line.strip()
